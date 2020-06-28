@@ -33,7 +33,6 @@ let add = () => {
   let title = document.getElementById("newTodo").value;
   if (!!title) {
     data.push({
-      id: Math.floor(Date.now()),
       title,
       completed: false,
     });
