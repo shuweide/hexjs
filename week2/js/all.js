@@ -10,7 +10,7 @@ const app = {
     axios
       .get(url)
       .then((res) => {
-        console.log(res);
+        console.log("res", res);
         vm.data.products = res.data.data;
         vm.render(res);
       })
@@ -23,7 +23,6 @@ const app = {
 
     let temp = "";
     this.data.products.forEach((product) => {
-      console.log(product);
       temp += `
           <li class="product card bg-light">
             <img src="${product.imageUrl}" class="card-img-top">
