@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/all.css" />
+    <title>產品列表</title>
+  </head>
+  <body>
+    <div id="app" class="container">
+      <section class="header d-flex justify-content-between mt-1 mb-1">
+        <h2>產品列表</h2>
+        <div class="menu">
+          <button
+            type="button"
+            class="btn btn-primary btn-md mt-1"
+            @click="openModal('add')"
+          >
+            新增
+          </button>
+        </div>
+      </section>
+      <div class="table-responsive-md">
+        <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">分類</th>
+              <th scope="col">產品名稱</th>
+              <th scope="col">原價</th>
+              <th scope="col">售價</th>
+              <th scope="col">是否啟用</th>
+              <th scope="col">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(product,index) in products" :key="product.id">
+              <td>{{ product.category }}</td>
+              <td>{{ product.title }}</td>
+              <td>{{ product.origin_price }}</td>
+              <td>{{ product.price }}</td>
+              <td>
+                <span v-if="product.enabled" class="text-success">啟用</span>
+                <span v-else>未啟用</span>
+              </td>
+              <td>
+                <div class="btn-group">
+                  <button
+                    class="btn btn-primary btn-sm"
+                    @click="openModal('edit',product, index)"
+                  >
+                    編輯
+                  </button>
+                  <button
+                    class="btn btn-danger btn-sm"
+                    @click="openModal('delete',product, index)"
+                  >
+                    刪除
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <pagination :pages="pagination" @update="getProducts"></pagination>
+        <product-modal
+          ref="productModal"
+          :creating-product="creatingProduct"
+          :user="user"
+          @update="getProducts"
+        ></product-modal>
+        <delete-product-modal
+          ref="deleteProductModal"
+          :editing-product="editingProduct"
+          :user="user"
+          @update="getProducts"
+        ></delete-product-modal>
+      </div>
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+      integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="js/pagination.js"></script>
+    <script src="js/productModal.js"></script>
+    <script src="js/deleteProductModal.js"></script>
+    <script src="js/all.js"></script>
+  </body>
+</html>
